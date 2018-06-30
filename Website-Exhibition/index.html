@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,500,700">
+    <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="./assets/styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js"></script>
     <title>Fresh & Local</title>
@@ -12,12 +13,36 @@
 <body>
     <div id="sections">
         <section id="intro" class="fullsize-area">
-            <img src="" alt="" id="logo">
+            <img src="./assets/images/logo.svg" alt="Fresh and Local" id="logo" class="icon --huge">
         </section>
         <section id="welcome" class="fullsize-area">
-            <h1>Hello!</h1>
+            <div class="wrapper">
+                <h1 class="space --below">Hallo!</h1>
+                <img class="icon --huge" src="./assets/images/arm-up.svg" alt="🙋">
+            </div>
         </section>
-        <section id="main" class="fullsize-area">Gewicht verändert... Preis!</section>
+        <section id="main" class="fullsize-area">
+            <div id="reciept">
+                <div class="headline">Dein Einkauf</div>
+                <div class="location">
+                    Fresh and Local<br>
+                    Altes Schalthaus<br>
+                    Rodensteinweg 2<br>
+                    64293 Darmstadt<br>
+                </div>
+                <div class="products">
+                    <div class="product">
+                        <div class="name">Kartoffeln</div>
+                        <div class="amount">100g</div>
+                        <div class="price">10,99 €</div>
+                    </div>
+                </div>
+                <div class="total">
+                    <div class="label">Gesamt</div>
+                    <div class="sum">10,99 €</div>
+                </div>
+            </div>
+        </section>
         <section id="details" class="fullsize-area">Mehr erfahren</section>
     </div>
 

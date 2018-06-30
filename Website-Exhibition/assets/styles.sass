@@ -1,5 +1,15 @@
 @import 'reset'
-    
+
+$transitionTime: 3s
+
+html
+    background-color: #FAFAFA
+
+    *
+        box-sizing: border-box
+        font-family: "IBM Plex", sans-serif
+        color: #333
+
 html, body
     height: 100%
 
@@ -11,46 +21,67 @@ body
             transform: translateX(0)
 
         #intro
-            transform: scale(1)
+            transform: perspective(1000px) translate3d(0, 0, 0) rotateX(0)
 
     &[data-section="welcome"]
         #sections
             transform: translateX(-25%)
 
         #welcome
-            transform: scale(1)
+            transform: perspective(1000px) translate3d(0, 0, 0) rotateX(0)
 
     &[data-section="main"]
         #sections
             transform: translateX(-50%)
 
         #main
-            transform: scale(1)
+            transform: perspective(1000px) translate3d(0, 0, 0) rotateX(0)
+
+            #reciept
+                transform: translateY(0)
 
     &[data-section="details"]
         #sections
             transform: translateX(-75%)
 
         #details
-            transform: scale(1)
+            transform: perspective(1000px) translate3d(0, 0, 0) rotateX(0)
 
 #sections
-    transform: translateX(0)
     height: 100%
     width: 400%
-    transition: all 500ms ease
+    transition: all $transitionTime ease
+    transition-timing-function: cubic-bezier(0.5, -0.5, 0.5, 1)
+    transform: translateX(0)
     display: flex
     flex-direction: row
-    transition-timing-function: cubic-bezier(0.5, -0.5, 0.5, 1)
 
 .fullsize-area
     height: 100%
     width: 100%
-    transition: all 500ms ease
-    transform: scale(0.8)
+    transition: all $transitionTime ease
+    transform: perspective(1000px) translate3d(0, 0, -500px) rotateX(0)
+    overflow: hidden
+
+    .icon
+        width: 32px
+        height: 32px
+
+        &.--huge
+            width: 512px
+            height: 512px
+    
+    h1
+        font-size: 64px
+        font-family: "Questrial", sans-serif
+
+.space
+
+    &.--below
+        margin-bottom: 64px
 
 #intro
-    background-color: #900
+    background-color: #EFEFEF
     display: flex
     align-items: center
     justify-content: center
@@ -58,14 +89,75 @@ body
     #logo
         width: 512px
         height: 512px
-        background-color: #333
         display: block
 
 #welcome
-    background-color: #090
+    background-color: #EFEFEF
+    text-align: center
+
+    .wrapper
+        padding: 64px
 
 #main
-    background-color: #009
+    background-color: #EFEFEF
+
+    // https://codepen.io/WhatTheKit/pen/grVJBq
+    #reciept
+        background: linear-gradient(transparent 20px, white 0), linear-gradient(-45deg, white 33%, transparent 33%) 0 0, linear-gradient(45deg, white 33%, transparent 33%) 0 0
+        background-repeat: repeat-x
+        background-size: 1px 100%, 20px 20px, 20px 20px
+        box-shadow: 0 18px 20px 5px rgba(0, 0, 0, 0.25)
+        padding: 30px 10px 10px 10px
+        min-height: 400px
+        width: 300px
+        position: absolute
+        left: 40px
+        bottom: 0
+        display: flex
+        flex-direction: column
+        justify-content: space-between
+        transform: translateY(100%)
+        transition: all 500ms ease
+        transition-delay: $transitionTime
+
+        .headline
+            margin-top: 20px
+            text-align: center
+            font-weight: 700
+            font-size: 24px
+            font-family: "Questrial", sans-serif
+        
+        .location
+            text-align: center
+            margin: 16px 0
+            line-height: 1.2rem
+            font-size: 0.9rem
+
+        .products
+            margin: 32px 16px
+            flex: 1
+
+            .product
+                display: flex
+                justify-content: left
+
+                .name
+                    margin-right: 8px
+
+                .amount
+                    flex: 1
+                    font-style: italic
+        
+        .total
+            display: flex
+            justify-content: space-between
+            margin: 16px
+            border-top: 1px solid #CCC
+            padding-top: 16px
+            font-size: 24px
+
+            .sum
+                font-weight: 700
 
 #details
-    background-color: #990
+    background-color: #EFEFEF

@@ -7,7 +7,7 @@ html
 
     *
         box-sizing: border-box
-        font-family: "IBM Plex", sans-serif
+        font-family: "IBM Plex Sans", sans-serif
         color: #333
 
 html, body
@@ -70,6 +70,10 @@ body
         &.--huge
             width: 512px
             height: 512px
+
+        &.--big
+            width: 256px
+            height: 256px
     
     h1
         font-size: 64px
@@ -79,6 +83,16 @@ body
 
     &.--below
         margin-bottom: 64px
+
+#visitor
+    font-weight: 700
+
+.paragraph
+    max-width: 580px
+    margin: 16px auto
+    line-height: 1.5rem
+    font-size: 1.2rem
+    text-align: left
 
 #intro
     background-color: #EFEFEF
@@ -133,13 +147,14 @@ body
             line-height: 1.2rem
             font-size: 0.9rem
 
-        .products
+        #products
             margin: 32px 16px
             flex: 1
 
             .product
                 display: flex
                 justify-content: left
+                margin: 8px 0
 
                 .name
                     margin-right: 8px
@@ -148,7 +163,7 @@ body
                     flex: 1
                     font-style: italic
         
-        .total
+        .sum
             display: flex
             justify-content: space-between
             margin: 16px
@@ -156,7 +171,7 @@ body
             padding-top: 16px
             font-size: 24px
 
-            .sum
+            #total
                 font-weight: 700
 
 #details

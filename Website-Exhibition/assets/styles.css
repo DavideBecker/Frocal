@@ -40,7 +40,7 @@ html {
 html * {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  font-family: "IBM Plex", sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
   color: #333;
 }
 
@@ -135,6 +135,11 @@ body[data-section="details"] #details {
   height: 512px;
 }
 
+.fullsize-area .icon.--big {
+  width: 256px;
+  height: 256px;
+}
+
 .fullsize-area h1 {
   font-size: 64px;
   font-family: "Questrial", sans-serif;
@@ -142,6 +147,18 @@ body[data-section="details"] #details {
 
 .space.--below {
   margin-bottom: 64px;
+}
+
+#visitor {
+  font-weight: 700;
+}
+
+.paragraph {
+  max-width: 580px;
+  margin: 16px auto;
+  line-height: 1.5rem;
+  font-size: 1.2rem;
+  text-align: left;
 }
 
 #intro {
@@ -221,34 +238,35 @@ body[data-section="details"] #details {
   font-size: 0.9rem;
 }
 
-#main #reciept .products {
+#main #reciept #products {
   margin: 32px 16px;
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
 }
 
-#main #reciept .products .product {
+#main #reciept #products .product {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: left;
       -ms-flex-pack: left;
           justify-content: left;
+  margin: 8px 0;
 }
 
-#main #reciept .products .product .name {
+#main #reciept #products .product .name {
   margin-right: 8px;
 }
 
-#main #reciept .products .product .amount {
+#main #reciept #products .product .amount {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
   font-style: italic;
 }
 
-#main #reciept .total {
+#main #reciept .sum {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -261,7 +279,7 @@ body[data-section="details"] #details {
   font-size: 24px;
 }
 
-#main #reciept .total .sum {
+#main #reciept .sum #total {
   font-weight: 700;
 }
 

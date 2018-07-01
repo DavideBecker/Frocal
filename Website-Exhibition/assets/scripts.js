@@ -5,24 +5,113 @@ var lastScale = 0
 var lastVisitors = 0
 var activeArea
 var INT_MAX = 32768
-var resetTime = 5000 // 5 minutes
+var resetTime = 5000 // ms
+var defaultPricePerKilo = 1.58 // EUR per KG
+
+// Helper functions
+
+function formatPrice(raw) {
+    return Number(raw).toFixed(2).toLocaleString()
+}
+
+// Elements and Templates
+
+function getId(id) {
+    return document.getElementById(id)
+}
+
+function tpl(id) {
+    return doT.template(getId('tpl-' + id).innerHTML)
+}
+
+var elems = {
+    visitor: getId('visitor'),
+    products: getId('products'),
+    total: getId('total'),
+
+    tpl: {
+        product: tpl('product')
+    }
+}
+
+// Products
+
+var products = []
+
+class Product {
+    constructor(name, weight, pricePerKilo) {
+        this.name = name || ''
+        this.weight = weight || 0
+        this.pricePerKilo = pricePerKilo || defaultPricePerKilo
+        products.push(this)
+    }
+
+    calcPrice() {
+        return this.pricePerKilo / 1000 * this.weight
+    }
+
+    getData() {
+        this.weight = Math.round(this.weight)
+
+        return {
+            name: this.name,
+            weight: this.weight,
+            price: this.calcPrice()
+        }
+    }
+
+    getIndex() {
+        return products.indexOf(this);
+    }
+
+    render(data) {
+        var r = data || this.getData()
+        return elems.tpl.product(r)
+    }
+
+    remove() {
+        var i = this.getIndex()
+        if(i !== -1) {
+            products.splice(i, 1);
+        }
+    }
+}
+
+var dynamicProduct = new Product('Kartoffeln')
+new Product('Äpfel', 50, 3)
+
+// Areas
 
 function switchArea(newArea) {
     activeArea = newArea
     document.body.dataset.section = newArea
 }
 
+// Data handling
+
 function handleWeight(amount) {
     lastScale = amount
 
-    console.log({
-        full: activeArea == 'welcome' && Math.abs(scaleDefault - lastScale) > scaleThreshold,
-        scaleDefault: scaleDefault,
-        lastScale: lastScale,
-        scaleThreshold: scaleThreshold,
-        abs: Math.abs(scaleDefault - lastScale),
-        bool: Math.abs(scaleDefault - lastScale) > scaleThreshold
-    })
+    // console.log({
+    //     full: activeArea == 'welcome' && Math.abs(scaleDefault - lastScale) > scaleThreshold,
+    //     scaleDefault: scaleDefault,
+    //     lastScale: lastScale,
+    //     scaleThreshold: scaleThreshold,
+    //     abs: Math.abs(scaleDefault - lastScale),
+    //     bool: Math.abs(scaleDefault - lastScale) > scaleThreshold
+    // })
+
+    elems.products.innerHTML = ''
+
+    dynamicProduct.weight = lastScale
+    
+    var total = 0
+
+    for(var prod of products) {
+        var productData = prod.getData()
+        total += productData.price
+        elems.products.innerHTML += prod.render(productData)
+    }
 
     resetDelay.reset()
 
@@ -32,7 +121,8 @@ function handleWeight(amount) {
 }
 
 function handleVisitors(amount) {
-    lastVisitors = amount
+    lastVisitors = +amount
+    elems.visitor.innerHTML = +lastVisitors
     if(activeArea == 'intro') {
         resetDelay.start()
         switchArea('welcome')
@@ -48,6 +138,8 @@ function handleData(response) {
         handleVisitors(response.data)
     }
 }
+
+// Generic timeout function
 
 class Timeout {
     constructor(func, delay) {
@@ -90,11 +182,11 @@ var resetDelay = new Timeout(function() {
 //     handleData(data)
 // })
 
-switchArea('intro')
+// switchArea('intro')
 
+// Manual switching
 
 document.addEventListener('keydown', function(e) {
-    console.log(e)
     if(e.code == 'Digit1') {
         switchArea('intro')
     }
@@ -113,22 +205,20 @@ document.addEventListener('keydown', function(e) {
 
     if(e.code == 'Digit5') {
         handleData({
-            sent: 1,
-            data: 400
+            sent: 2,
+            data: lastVisitors + 1
         })
     }
 
     if(e.code == 'Digit6') {
         handleData({
             sent: 1,
-            data: 600
+            data: 200 + Math.random() * 2000
         })
     }
 
-    if(e.code == 'Digit7') {
-        handleData({
-            sent: 2,
-            data: 10
-        })
+    if(e.code == 'Digit9') {
+        resetDelay.trigger()
+        resetDelay.stop()
     }
 })

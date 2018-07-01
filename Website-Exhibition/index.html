@@ -8,9 +8,17 @@
     <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="./assets/styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dot/1.1.2/doT.min.js"></script>
     <title>Fresh & Local</title>
+    <script id="tpl-product" type="text/template">
+        <div class="product">
+            <div class="name">{{=it.name}}</div>
+            <div class="amount">{{=it.weight}}g</div>
+            <div id="dynamic-price" class="price">{{=formatPrice(it.price)}} €</div>
+        </div>
+    </script>
 </head>
-<body>
+<body data-section="welcome">
     <div id="sections">
         <section id="intro" class="fullsize-area">
             <img src="./assets/images/logo.svg" alt="Fresh and Local" id="logo" class="icon --huge">
@@ -18,7 +26,10 @@
         <section id="welcome" class="fullsize-area">
             <div class="wrapper">
                 <h1 class="space --below">Hallo!</h1>
-                <img class="icon --huge" src="./assets/images/arm-up.svg" alt="🙋">
+                <img class="icon --big space --below" src="./assets/images/arm-up.svg" alt="🙋">
+                <div class="paragraph">Willkommen bei Fresh and Local. Du bist unser <span id="visitor">1</span>. Besucher heute.</div>
+                <div class="paragraph">Fresh and Local ist ein Hofladen, der ohne Personal funktioniert. So ist ein Landwirt unabhängig von Konzernen und kann seinen eigenen Direktvertrieb ohne den enormen Zeitaufwand führen.</div>
+                <div class="paragraph">Du kannst dir ein paar Kartoffeln aus der Kiste unten nehmen, um zu sehen wie der Laden funktioniert.</div>
             </div>
         </section>
         <section id="main" class="fullsize-area">
@@ -30,16 +41,10 @@
                     Rodensteinweg 2<br>
                     64293 Darmstadt<br>
                 </div>
-                <div class="products">
-                    <div class="product">
-                        <div class="name">Kartoffeln</div>
-                        <div class="amount">100g</div>
-                        <div class="price">10,99 €</div>
-                    </div>
-                </div>
-                <div class="total">
+                <div id="products"></div>
+                <div class="sum">
                     <div class="label">Gesamt</div>
-                    <div class="sum">10,99 €</div>
+                    <div id="total">10,99 €</div>
                 </div>
             </div>
         </section>

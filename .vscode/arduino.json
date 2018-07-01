@@ -1,0 +1,6 @@
+{
+    "port": "COM3",
+    "board": "arduino:avr:uno",
+    "sketch": "Arduino-Sketches\\Distance-Test\\Distance-Test.ino",
+    "output": "D:\\_temp\\_cache\\Arduino"
+}

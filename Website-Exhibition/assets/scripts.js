@@ -39,7 +39,7 @@ var elems = {
 var products = []
 
 class Product {
-    constructor(name, weight, pricePerKilo) {
+    constructor(name, pricePerKilo, weight) {
         this.name = name || ''
         this.weight = weight || 0
         this.pricePerKilo = pricePerKilo || defaultPricePerKilo
@@ -77,8 +77,9 @@ class Product {
     }
 }
 
-var dynamicProduct = new Product('Kartoffeln')
-new Product('Äpfel', 50, 3)
+var dynamicProduct = new Product('Kartoffeln', 1.85)
+new Product('Äpfel', 2.99, 53)
+new Product('Tomaten', 4.59, 241)
 
 // Areas
 
@@ -112,6 +113,8 @@ function handleWeight(amount) {
         total += productData.price
         elems.products.innerHTML += prod.render(productData)
     }
+
+    elems.total.innerHTML = formatPrice(total) + ' €'
 
     resetDelay.reset()
 

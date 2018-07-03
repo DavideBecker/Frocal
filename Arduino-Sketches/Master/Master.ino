@@ -43,10 +43,20 @@ float calibration_factor = 106600; //-106600 worked for my 40Kg max scale setup
 // https://funduino.de/nr-8-bewegungsmelder
 
 // Which pins to use
-int motionSensorPin = 5;
-int motionSensorState = 0;
+//int motionSensorPin = 5;
+//int motionSensorState = 0;
+//int motionDetectionCounter = 0;
+
+//////////////////////////
+// Motion Detection - 2 //
+//////////////////////////
+// https://defendtheplanet.net/2016/01/01/5v-light-detector-analog-digital-flying-fish-mh-sensor-series/
+
+int motionDetectorPin = A0;
+int motionDetectorLedPin = 4;
+int motionDetectorValue = 0;
 int motionDetectionCounter = 0;
-bool motionAlreadyDetected = false;
+int motionDetectionTime = 0;
 
 //////////////////
 // Main sketch //
@@ -61,8 +71,9 @@ void setup() {
   Serial.println("SimpleTx Starting");
   
   // Setup pins on the arduino
-  pinMode(motionSensorPin, INPUT);
-  pinMode(debugLED, OUTPUT);
+  // pinMode(motionSensorPin, INPUT);
+  pinMode(motionDetectorLedPin, OUTPUT);
+  pinMode(motionDetectorPin, INPUT);
   
   // Start up the wireless transmitter
   radio.begin();
@@ -78,6 +89,7 @@ void setup() {
 //==================== Loop
 
 void loop() {
+  // Scale
   currentMillis = millis(); // Get current time in milliseconds
   if (currentMillis - prevMillis >= txIntervalMillis) { // If the specified interval is over
     int weight = scale.get_units() * 1000 + 100; // Get the weight of the scale in grams + 100 
@@ -85,27 +97,40 @@ void loop() {
     send(weight, 1); // Send the weight to the slave
     prevMillis = millis(); // Update timing variable
   }
-  
+
+  // Tara scale
   if(Serial.available()) { // Listen for input
     char temp = Serial.read(); // Get the input
     if(temp == 't' || temp == 'T') { // If the input was "t"
       scale.tare(); //Reset the scale to zero
     }
   }
-  
-  motionSensorState = digitalRead(motionSensorPin);
-  if (motionSensorState == HIGH && !motionAlreadyDetected) {
-    // Motion detected
-    digitalWrite(debugLED, HIGH);
+
+  // Motion Sensor 1
+//  motionSensorState = digitalRead(motionSensorPin);
+//  if (motionSensorState == HIGH && !motionAlreadyDetected) {
+//    // Motion detected
+//    digitalWrite(debugLED, HIGH);
+//    motionDetectionCounter += 1;
+//    //Serial.print("Motion detected: #");
+//    //Serial.println(motionDetectionCounter);
+//    motionAlreadyDetected = true;
+//    send(motionDetectionCounter, 2);
+//  } else if(motionSensorState == LOW && motionAlreadyDetected) {
+//    // No motion detected
+//    digitalWrite(debugLED, LOW);
+//    motionAlreadyDetected = false;
+//  }
+
+  // Motion Sensor 2
+  motionDetectorValue = digitalRead (motionDetectorPin);
+  digitalWrite(motionDetectorLedPin, motionDetectorValue);
+  if(motionDetectorValue == HIGH && !motionDetectionTime) {
     motionDetectionCounter += 1;
-    //Serial.print("Motion detected: #");
-    //Serial.println(motionDetectionCounter);
-    motionAlreadyDetected = true;
+    motionDetectionTime = millis();
     send(motionDetectionCounter, 2);
-  } else if(motionSensorState == LOW && motionAlreadyDetected) {
-    // No motion detected
-    digitalWrite(debugLED, LOW);
-    motionAlreadyDetected = false;
+  } else if(motionDetectorValue == LOW && currentMillis - motionDetectionTime > 1000 && motionDetectionTime) {
+    motionDetectionTime = 0;
   }
 }
 

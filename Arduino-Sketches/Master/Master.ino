@@ -23,6 +23,7 @@ char txNum = '0';
 // Timing variables
 unsigned long currentMillis;
 unsigned long prevMillis;
+unsigned long lastSent;
 unsigned long txIntervalMillis = 100; // send once per second
 
 ///////////
@@ -52,11 +53,26 @@ float calibration_factor = 106600; //-106600 worked for my 40Kg max scale setup
 //////////////////////////
 // https://defendtheplanet.net/2016/01/01/5v-light-detector-analog-digital-flying-fish-mh-sensor-series/
 
-int motionDetectorPin = A0;
-int motionDetectorLedPin = 4;
-int motionDetectorValue = 0;
-int motionDetectionCounter = 0;
-int motionDetectionTime = 0;
+//int motionDetectorPin = A0;
+//int motionDetectorLedPin = 4;
+//int motionDetectorValue = 0;
+//int motionDetectionCounter = 0;
+//int motionDetectionTime = 0;
+
+//////////////////////////
+// Motion Detection - 3 //
+//////////////////////////
+// http://www.instructables.com/id/Arduino-Sonar-Object-Counter/
+
+#define motionDetectorLedPin  4  // the pin that the LED is attached to
+#define motionDetectorEchoPin 5 // Echo Pin
+#define motionDetectorTrigPin 6 // Trigger Pin
+
+long motionDetectionDuration, motionDetectionDistance; // Duration used to calculate distance
+int motionDetectionCounter = 0;   // counter for the number of button presses
+long lastMotionDetectionDistance = 0;
+long motionDetectionIncomingByte;
+unsigned long lastDetected = 0;
 
 //////////////////
 // Main sketch //
@@ -71,9 +87,17 @@ void setup() {
   Serial.println("SimpleTx Starting");
   
   // Setup pins on the arduino
+  // Motion 1
   // pinMode(motionSensorPin, INPUT);
+
+  // Motion 2
+  // pinMode(motionDetectorLedPin, OUTPUT);
+  // pinMode(motionDetectorPin, INPUT);
+  
+  // Motion 3
   pinMode(motionDetectorLedPin, OUTPUT);
-  pinMode(motionDetectorPin, INPUT);
+  pinMode(motionDetectorEchoPin, INPUT);
+  pinMode(motionDetectorTrigPin, OUTPUT);
   
   // Start up the wireless transmitter
   radio.begin();
@@ -91,11 +115,11 @@ void setup() {
 void loop() {
   // Scale
   currentMillis = millis(); // Get current time in milliseconds
-  if (currentMillis - prevMillis >= txIntervalMillis) { // If the specified interval is over
+  if (currentMillis - lastSent >= txIntervalMillis) { // If the specified interval is over
     int weight = scale.get_units() * 1000 + 100; // Get the weight of the scale in grams + 100 
                                                  // (So it doesn't underflow)
     send(weight, 1); // Send the weight to the slave
-    prevMillis = millis(); // Update timing variable
+    lastSent = currentMillis;
   }
 
   // Tara scale
@@ -123,15 +147,54 @@ void loop() {
 //  }
 
   // Motion Sensor 2
-  motionDetectorValue = digitalRead (motionDetectorPin);
-  digitalWrite(motionDetectorLedPin, motionDetectorValue);
-  if(motionDetectorValue == HIGH && !motionDetectionTime) {
-    motionDetectionCounter += 1;
-    motionDetectionTime = millis();
+//  motionDetectorValue = digitalRead (motionDetectorPin);
+//  Serial.println(motionDetectorValue);
+//  digitalWrite(motionDetectorLedPin, motionDetectorValue);
+//  if(motionDetectorValue == HIGH && !motionDetectionTime) {
+//    motionDetectionCounter += 1;
+//    motionDetectionTime = millis();
+//    send(motionDetectionCounter, 2);
+//  } else if(motionDetectorValue == LOW && currentMillis - motionDetectionTime > 1000 && motionDetectionTime) {
+//    motionDetectionTime = 0;
+//  }
+
+  // Motion Sensor 3
+  digitalWrite(motionDetectorTrigPin, LOW); 
+  delay(5); 
+  
+  digitalWrite(motionDetectorTrigPin, HIGH);
+  delay(10); 
+  
+  digitalWrite(motionDetectorTrigPin, LOW);
+
+  motionDetectionDuration = pulseIn(motionDetectorEchoPin, HIGH);
+  
+  //Calculate the distance (in cm) based on the speed of sound.
+  // motionDetectionDistance = motionDetectionDuration/58.2;
+  motionDetectionDistance = (motionDetectionDuration/2) * 0.03432;
+
+//  Serial.println("");
+//  Serial.println(motionDetectionDistance);
+//  Serial.println(lastMotionDetectionDistance);
+//  Serial.println(motionDetectionCounter);
+//  Serial.println("");
+//  Serial.println(currentMillis);
+//  Serial.println(lastDetected);
+//  Serial.println(currentMillis - lastDetected);
+//  Serial.println("");
+
+  if (motionDetectionDistance <= 100 && motionDetectionDistance != 0 && (lastMotionDetectionDistance >= 120 || lastMotionDetectionDistance == 0) && currentMillis - lastDetected > 5000){
+    motionDetectionCounter++;
+    digitalWrite(motionDetectorLedPin, HIGH);
+    lastDetected = currentMillis;
     send(motionDetectionCounter, 2);
-  } else if(motionDetectorValue == LOW && currentMillis - motionDetectionTime > 1000 && motionDetectionTime) {
-    motionDetectionTime = 0;
+  } else {
+    digitalWrite(motionDetectorLedPin, LOW);
   }
+  
+  lastMotionDetectionDistance = motionDetectionDistance;
+  
+  prevMillis = millis(); // Update timing variable
 }
 
 //==================== Send

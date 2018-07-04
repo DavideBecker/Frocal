@@ -6,8 +6,8 @@ var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-// var serialportName = '/dev/cu.usbmodem1411'
-var serialportName = 'COM6'
+var serialportName = '/dev/cu.usbmodem1411'
+// var serialportName = 'COM6'
 
 const port = new SerialPort(serialportName, {
     // baudRate: 38400

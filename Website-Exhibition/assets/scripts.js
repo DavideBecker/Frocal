@@ -99,7 +99,7 @@ function handleWeight(amount) {
         }
     }
 
-    lastScale = amount
+    lastScale = Math.max(amount - 100, 0)
 
     // console.log({
     //     full: activeArea == 'welcome' && Math.abs(scaleDefault - lastScale) > scaleThreshold,

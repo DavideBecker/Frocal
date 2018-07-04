@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.3",
-    "serialport": "^6.2.0",
+    "serialport": "^6.2.1",
     "socket.io": "^2.1.1"
   }
 }

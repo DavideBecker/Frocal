@@ -91,6 +91,14 @@ function switchArea(newArea) {
 // Data handling
 
 function handleWeight(amount) {
+
+    if(Math.abs(lastScale - amount) > scaleThreshold) {
+        resetDelay.reset()
+        if(activeArea == 'welcome') {
+            switchArea('main')
+        }
+    }
+
     lastScale = amount
 
     // console.log({
@@ -105,7 +113,7 @@ function handleWeight(amount) {
     elems.products.innerHTML = ''
 
     dynamicProduct.weight = lastScale
-    
+
     var total = 0
 
     for(var prod of products) {
@@ -115,12 +123,6 @@ function handleWeight(amount) {
     }
 
     elems.total.innerHTML = formatPrice(total) + ' €'
-
-    resetDelay.reset()
-
-    if(activeArea == 'welcome' && Math.abs(scaleDefault - lastScale) > scaleThreshold) {
-        switchArea('main')
-    }
 }
 
 function handleVisitors(amount) {
@@ -133,6 +135,7 @@ function handleVisitors(amount) {
 }
 
 function handleData(response) {
+    console.log(response)
     if(response.sent == 1) {
         handleWeight(response.data)
     }
@@ -181,11 +184,11 @@ var resetDelay = new Timeout(function() {
     switchArea('intro')
 }, resetTime)
 
-// socket.on('sensorData', function(data) {
-//     handleData(data)
-// })
+socket.on('sensorData', function(data) {
+    handleData(data)
+})
 
-// switchArea('intro')
+switchArea('intro')
 
 // Manual switching
 

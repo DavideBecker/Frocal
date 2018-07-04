@@ -6,7 +6,10 @@ var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-const port = new SerialPort('/dev/cu.usbmodem1411', {
+// var serialportName = '/dev/cu.usbmodem1411'
+var serialportName = 'COM6'
+
+const port = new SerialPort(serialportName, {
     // baudRate: 38400
     // baudRate: 115200
     baudRate: 9600
@@ -16,7 +19,7 @@ if(port) {
     port.pipe(parser);
     parser.on('data', function(data) {
         var parsedData
-        
+
         try {
             parsedData = JSON.parse(data.toString())
             console.log(parsedData)
@@ -39,4 +42,4 @@ app.get('/', function(req, res,next) {
     res.sendFile(__dirname + '/index.html');
 });
 
-server.listen(8080); 
+server.listen(8080);

@@ -57,19 +57,22 @@ body
     flex-direction: row
 
 .fullsize-area
-    height: 100%
     width: 100%
     transition: all $transitionTime ease
     transform: perspective(1000px) translate3d(0, 0, -500px) rotateX(0)
     overflow: hidden
+    display: flex
+    flex-direction: column
+    justify-content: center
+    height: 100%
 
     .icon
         width: 32px
         height: 32px
 
         &.--huge
-            width: 512px
-            height: 512px
+            width: 384px
+            height: 384px
 
         &.--big
             width: 256px
@@ -81,6 +84,9 @@ body
 
 .space
 
+    &.--before
+        margin-top: 64px
+
     &.--below
         margin-bottom: 64px
 
@@ -89,10 +95,35 @@ body
 
 .paragraph
     max-width: 580px
-    margin: 16px auto
-    line-height: 1.5rem
+    margin: 32px auto
+    line-height: 1.6rem
     font-size: 1.2rem
     text-align: left
+
+    &:first-of-type
+        margin-top: 0
+
+.wrapper
+    padding: 32px
+    max-width: 580px
+    margin: 16px auto
+
+.button
+    background-color: #65B696
+    color: #FEF1E8
+    padding: 8px 16px
+    border-radius: 6px
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2)
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)
+    position: relative
+    bottom: 0
+    transition: all 180ms ease
+    cursor: pointer
+
+    &:hover
+        background-color: darken(#65B696, 10%)
+        bottom: 2px
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)
 
 #intro
     background-color: #EFEFEF
@@ -108,9 +139,6 @@ body
 #welcome
     background-color: #EFEFEF
     text-align: center
-
-    .wrapper
-        padding: 64px
 
 #main
     background-color: #EFEFEF

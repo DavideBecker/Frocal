@@ -28,6 +28,7 @@ var elems = {
     visitor: getId('visitor'),
     products: getId('products'),
     total: getId('total'),
+    showDetails: getId('show-details'),
 
     tpl: {
         product: tpl('product')
@@ -92,14 +93,21 @@ function switchArea(newArea) {
 
 function handleWeight(amount) {
 
+    console.log({
+        scaleDefault: scaleDefault, 
+        amount: amount, 
+        lastScale: lastScale, 
+        diff: lastScale - amount, 
+        scaleThreshold: scaleThreshold
+    })
+
     if(Math.abs(lastScale - amount) > scaleThreshold) {
         resetDelay.reset()
         if(activeArea == 'welcome') {
             switchArea('main')
+            scaleDefault = lastScale
         }
     }
-
-    lastScale = Math.max(amount - 100, 0)
 
     // console.log({
     //     full: activeArea == 'welcome' && Math.abs(scaleDefault - lastScale) > scaleThreshold,
@@ -112,7 +120,7 @@ function handleWeight(amount) {
 
     elems.products.innerHTML = ''
 
-    dynamicProduct.weight = lastScale
+    dynamicProduct.weight = Math.round(Math.max(scaleDefault - amount, 0) / 3) * 3
 
     var total = 0
 
@@ -123,6 +131,8 @@ function handleWeight(amount) {
     }
 
     elems.total.innerHTML = formatPrice(total) + ' €'
+
+    lastScale = amount
 }
 
 function handleVisitors(amount) {
@@ -135,7 +145,7 @@ function handleVisitors(amount) {
 }
 
 function handleData(response) {
-    console.log(response)
+    // console.log(response)
     if(response.sent == 1) {
         handleWeight(response.data)
     }
@@ -227,4 +237,8 @@ document.addEventListener('keydown', function(e) {
         resetDelay.trigger()
         resetDelay.stop()
     }
+})
+
+elems.showDetails.addEventListener('click', function() {
+    switchArea('details')
 })

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,6 +19,7 @@
         </div>
     </script>
 </head>
+
 <body data-section="welcome">
     <div id="sections">
         <section id="intro" class="fullsize-area">
@@ -27,26 +29,42 @@
             <div class="wrapper">
                 <h1 class="space --below">Hallo!</h1>
                 <img class="icon --big space --below" src="./assets/images/arm-up.svg" alt="🙋">
-                <div class="paragraph">Willkommen bei Fresh and Local. Du bist unser <span id="visitor">1</span>. Besucher heute.</div>
-                <div class="paragraph">Fresh and Local ist ein Hofladen, der ohne Personal funktioniert. So ist ein Landwirt unabhängig von Konzernen und kann seinen eigenen Direktvertrieb ohne den enormen Zeitaufwand führen.</div>
+                <div class="paragraph">Willkommen bei Fresh and Local. Du bist unser
+                    <span id="visitor">1</span>. Besucher heute.</div>
+                <div class="paragraph">Fresh and Local ist ein Hofladen, der ohne Personal funktioniert. So ist ein Landwirt unabhängig von Konzernen
+                    und kann seinen eigenen Direktvertrieb ohne den enormen Zeitaufwand führen.</div>
                 <div class="paragraph">Du kannst dir ein paar Kartoffeln aus der Kiste unten nehmen, um zu sehen wie der Laden funktioniert.</div>
             </div>
         </section>
         <section id="main" class="fullsize-area">
             <div class="wrapper">
-                <div class="paragraph">Der Laden weiß, wo sich die Kunden im Laden befinden. Unter den Kisten sind außerdem Waagen verbaut. Dadurch kann der Laden nachvollziehen, wie viel jeder Kunde eingekauft hat und zahlen muss. Keine Schlange an der Kasse mehr.</div>
-                <div class="paragraph">Die Daten, die der Laden sammelt werden an den Landwirten geschickt. So kann er immer den aktuellen Stand im Laden überprüfen ohne tatsächlich anwesend zu sein. Beispielsweise weiß er dadurch, wann die Waren wieder aufgefüllt werden müssen.</div>
-                <div class="paragraph">Klingt interessant?</div>
-                <div class="paragraph"><span id="show-details" class="button">Mehr über das Konzept →</span></div>
+                <div class="paragraph">Der Laden weiß, wo sich die Kunden im Laden befinden. Unter den Kisten sind außerdem Waagen verbaut. Dadurch
+                    kann der Laden nachvollziehen, wie viel jeder Kunde eingekauft hat und zahlen muss. Keine Schlange an
+                    der Kasse mehr.</div>
+
+                <!-- https://codepen.io/johholl/pen/DGfem-->
+                <div id="wifi-symbol">
+                    <div class="wifi-circle first"></div>
+                    <div class="wifi-circle second"></div>
+                    <div class="wifi-circle third"></div>
+                    <div class="wifi-circle fourth"></div>
+                </div>
+                <div class="paragraph">
+                    Die Daten, die der Laden sammelt werden an den Landwirten geschickt. So kann er immer den aktuellen Stand im Laden überprüfen
+                    ohne tatsächlich anwesend zu sein. Beispielsweise weiß er dadurch, wann die Waren wieder aufgefüllt werden
+                    müssen.</div>
+                <!-- <div class="paragraph">Klingt interessant?</div>
+                <div class="paragraph"><span id="show-details" class="button">Mehr über das Konzept →</span></div> -->
                 <div class="paragraph">Du kannst dir auch an dem Tisch nebenan anschauen, was der Landwirt dabei sieht.</div>
             </div>
             <div id="reciept">
                 <div class="headline">Dein Einkauf</div>
                 <div class="location">
-                    Fresh and Local<br>
-                    Altes Schalthaus<br>
-                    Rodensteinweg 2<br>
-                    64293 Darmstadt<br>
+                    Fresh and Local
+                    <br> Altes Schalthaus
+                    <br> Rodensteinweg 2
+                    <br> 64293 Darmstadt
+                    <br>
                 </div>
                 <div id="products"></div>
                 <div class="sum">
@@ -55,9 +73,12 @@
                 </div>
             </div>
         </section>
-        <section id="details" class="fullsize-area">Mehr erfahren</section>
+        <section id="details" class="fullsize-area">
+            <!-- <video id="trailer" src=""></video> -->
+        </section>
     </div>
 
     <script src="./assets/scripts.js"></script>
 </body>
+
 </html>

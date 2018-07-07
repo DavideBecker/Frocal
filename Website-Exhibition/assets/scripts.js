@@ -72,7 +72,7 @@ class Product {
 
     remove() {
         var i = this.getIndex()
-        if(i !== -1) {
+        if (i !== -1) {
             products.splice(i, 1);
         }
     }
@@ -94,16 +94,16 @@ function switchArea(newArea) {
 function handleWeight(amount) {
 
     console.log({
-        scaleDefault: scaleDefault, 
-        amount: amount, 
-        lastScale: lastScale, 
-        diff: lastScale - amount, 
+        scaleDefault: scaleDefault,
+        amount: amount,
+        lastScale: lastScale,
+        diff: lastScale - amount,
         scaleThreshold: scaleThreshold
     })
 
-    if(Math.abs(lastScale - amount) > scaleThreshold) {
+    if (Math.abs(lastScale - amount) > scaleThreshold) {
         resetDelay.reset()
-        if(activeArea == 'welcome') {
+        if (activeArea == 'welcome') {
             switchArea('main')
             scaleDefault = lastScale
         }
@@ -124,7 +124,7 @@ function handleWeight(amount) {
 
     var total = 0
 
-    for(var prod of products) {
+    for (var prod of products) {
         var productData = prod.getData()
         total += productData.price
         elems.products.innerHTML += prod.render(productData)
@@ -138,7 +138,7 @@ function handleWeight(amount) {
 function handleVisitors(amount) {
     lastVisitors = +amount
     elems.visitor.innerHTML = +lastVisitors
-    if(activeArea == 'intro') {
+    if (activeArea == 'intro') {
         resetDelay.start()
         switchArea('welcome')
     }
@@ -146,11 +146,11 @@ function handleVisitors(amount) {
 
 function handleData(response) {
     // console.log(response)
-    if(response.sent == 1) {
+    if (response.sent == 1) {
         handleWeight(response.data)
     }
 
-    if(response.sent == 2) {
+    if (response.sent == 2) {
         handleVisitors(response.data)
     }
 }
@@ -183,18 +183,18 @@ class Timeout {
     }
 
     reset() {
-        if(this.timeout) {
+        if (this.timeout) {
             this.set()
         }
     }
 }
 
-var resetDelay = new Timeout(function() {
+var resetDelay = new Timeout(function () {
     scaleDefault = lastScale
     switchArea('intro')
 }, resetTime)
 
-socket.on('sensorData', function(data) {
+socket.on('sensorData', function (data) {
     handleData(data)
 })
 
@@ -202,43 +202,46 @@ switchArea('intro')
 
 // Manual switching
 
-document.addEventListener('keydown', function(e) {
-    if(e.code == 'Digit1') {
+document.addEventListener('keydown', function (e) {
+    if (e.code == 'Digit1') {
         switchArea('intro')
     }
 
-    if(e.code == 'Digit2') {
+    if (e.code == 'Digit2') {
         switchArea('welcome')
     }
 
-    if(e.code == 'Digit3') {
+    if (e.code == 'Digit3') {
         switchArea('main')
     }
 
-    if(e.code == 'Digit4') {
+    if (e.code == 'Digit4') {
         switchArea('details')
     }
 
-    if(e.code == 'Digit5') {
+    if (e.code == 'Digit5') {
         handleData({
             sent: 2,
             data: lastVisitors + 1
         })
     }
 
-    if(e.code == 'Digit6') {
+    if (e.code == 'Digit6') {
         handleData({
             sent: 1,
             data: 200 + Math.random() * 2000
         })
     }
 
-    if(e.code == 'Digit9') {
+    if (e.code == 'Digit9') {
         resetDelay.trigger()
         resetDelay.stop()
     }
 })
 
-elems.showDetails.addEventListener('click', function() {
-    switchArea('details')
-})
+// elems.showDetails.addEventListener('click', function () {
+//     switchArea('details')
+// })
+
+
+

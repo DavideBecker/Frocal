@@ -33,6 +33,79 @@ table {
   border-spacing: 0;
 }
 
+#wifi-symbol {
+  display: none;
+  display: block;
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+  margin-right: 16px;
+  margin-bottom: 6.4px;
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+}
+
+#wifi-symbol .wifi-circle {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  display: block;
+  width: 100%;
+  height: 100%;
+  font-size: 9.14286px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  border-color: #47A4A7;
+  border-style: solid;
+  border-width: 1em 1em 0 0;
+  border-radius: 0 100% 0 0;
+  opacity: 0;
+  -webkit-animation: wifianimation 3s infinite;
+  animation: wifianimation 3s infinite;
+}
+
+#wifi-symbol .wifi-circle.first {
+  -webkit-animation-delay: 800ms;
+  animation-delay: 800ms;
+}
+
+#wifi-symbol .wifi-circle.second {
+  width: 5em;
+  height: 5em;
+  -webkit-animation-delay: 400ms;
+  animation-delay: 400ms;
+}
+
+#wifi-symbol .wifi-circle.third {
+  width: 3em;
+  height: 3em;
+}
+
+#wifi-symbol .wifi-circle.fourth {
+  width: 1em;
+  height: 1em;
+  opacity: 1;
+  background-color: #47A4A7;
+  -webkit-animation: none;
+  animation: none;
+}
+
+@-webkit-keyframes wifianimation {
+  0% {
+    opacity: 0.4;
+  }
+  5% {
+    opactiy: 1;
+  }
+  6% {
+    opactiy: 0.1;
+  }
+  100% {
+    opactiy: 0.1;
+  }
+}
+
 html {
   background-color: #FAFAFA;
 }
@@ -168,7 +241,7 @@ body[data-section="details"] #details {
 }
 
 .paragraph {
-  max-width: 580px;
+  width: 100%;
   margin: 32px auto;
   line-height: 1.6rem;
   font-size: 1.2rem;
@@ -180,7 +253,6 @@ body[data-section="details"] #details {
 }
 
 .wrapper {
-  padding: 32px;
   max-width: 580px;
   margin: 16px auto;
 }
@@ -327,5 +399,9 @@ body[data-section="details"] #details {
 
 #details {
   background-color: #EFEFEF;
+}
+
+#wifi-symbol {
+  float: left;
 }
 /*# sourceMappingURL=styles.css.map */

@@ -12,8 +12,8 @@
 //////////////
 
 // Which pins to use & Setup
-#define CE_PIN   7
-#define CSN_PIN  8
+#define CE_PIN   9
+#define CSN_PIN  10
 RF24 radio(CE_PIN, CSN_PIN);
 
 const byte slaveAddress[5] = {'R','x','A','A','A'};
@@ -64,9 +64,9 @@ float calibration_factor = 106600; //-106600 worked for my 40Kg max scale setup
 //////////////////////////
 // http://www.instructables.com/id/Arduino-Sonar-Object-Counter/
 
-#define motionDetectorLedPin  4  // the pin that the LED is attached to
-#define motionDetectorEchoPin 5 // Echo Pin
-#define motionDetectorTrigPin 6 // Trigger Pin
+#define motionDetectorLedPin  13  // the pin that the LED is attached to
+#define motionDetectorEchoPin 6 // Echo Pin
+#define motionDetectorTrigPin 7 // Trigger Pin
 
 long motionDetectionDuration, motionDetectionDistance; // Duration used to calculate distance
 int motionDetectionCounter = 0;   // counter for the number of button presses

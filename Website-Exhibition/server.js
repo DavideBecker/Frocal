@@ -59,7 +59,7 @@ io.on('connection', (socket) => {
 
 app.use('/assets', express.static(__dirname + '/assets'));
 
-app.get('/', function (req, res, next) {
+app.get('/', function(req, res, next) {
     res.sendFile(__dirname + '/index.html');
 });
 

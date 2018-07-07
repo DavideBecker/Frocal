@@ -9,8 +9,8 @@
 //////////////
 
 // Which pins to use & Setup
-#define CE_PIN   7
 #define CSN_PIN  8
+#define CE_PIN   9
 RF24 radio(CE_PIN, CSN_PIN);
 
 const byte thisSlaveAddress[5] = {'R','x','A','A','A'};
@@ -22,10 +22,10 @@ bool newData = false; // Allows to ignore duplicate data
 /////////////////////
 
 // Which pins to use
-#define notifyPin 5
-#define redPin    4
+#define notifyPin 7
+#define redPin    5
 #define greenPin  3
-#define bluePin   2
+#define bluePin   6
 
 //===========
 
@@ -105,6 +105,11 @@ void setup() {
   // Start debug console
   Serial.begin(9600);
   Serial.println("SimpleRx Starting");
+
+  pinMode(notifyPin, OUTPUT);
+  pinMode(redPin, OUTPUT);
+  pinMode(greenPin, OUTPUT);
+  pinMode(bluePin, OUTPUT);
   
   // Start up the wireless transmitter
   radio.begin();
@@ -135,7 +140,7 @@ void getData() {
 
 void showData() {
   if (newData == true) { // If we have new data available
-    digitalWrite(notifyPin, 0); // Turn off the notification LED
+    digitalWrite(notifyPin, LOW); // Turn off the notification LED
     
     // Turn the recieved 4x8bit integers back to a 32bit integer
     uint32_t num = (uint8_t)dataReceived[1] << 24 |
@@ -152,7 +157,7 @@ void showData() {
     }
 
     if((uint8_t)dataReceived[0] == 2) { // If the control pin is 2 (Visitor)
-      digitalWrite(notifyPin, 1); // Make the notification LED light up
+      digitalWrite(notifyPin, HIGH); // Make the notification LED light up
       delay(1000); // Wait a second
     }
 

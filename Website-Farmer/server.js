@@ -7,7 +7,7 @@ var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-var serialportName = '/dev/cu.usbmodem1411'
+var serialportName = process.argv || '/dev/cu.usbmodem1411'
 // var serialportName = 'COM6'
 function reconnectArduino() {
     console.log('INITIATING RECONNECT');

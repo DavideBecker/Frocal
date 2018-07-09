@@ -5,7 +5,7 @@ var lastScale = 0
 var lastVisitors = 0
 var activeArea
 var INT_MAX = 32768
-var resetTime = 5000 // ms
+var resetTime = 1000 * 60 * 2 // ms - 2 minutes
 var defaultPricePerKilo = 1.58 // EUR per KG
 
 // Helper functions

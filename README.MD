@@ -4,10 +4,10 @@ Fresh and Local is a smart farm store. It works without any staff, gives the far
 
 ## Files in this repository
 
-[Website-Exhibition](./Website-Exhibition) ([ link ](https://davidebecker.github.io/Frocal/Website-Exhibition/))    
+[Interface-Exhibition](./Interface-Exhibition) ([ link ](https://davidebecker.github.io/Frocal/Interface-Exhibition/))    
 A demo site that showcases most of the functionality and guides a user though the concept.
 
-[Website-Farmer](./Website-Farmer) ([ link ](https://davidebecker.github.io/Frocal/Website-Farmer/))    
+[Interface-Farmer](./Interface-Farmer) ([ link ](https://davidebecker.github.io/Frocal/Interface-Farmer/))    
 The interface where the farmer can view all data in detail (In adition to an ambient display)
 
 [Arduino-Sketches/Master](./Arduino-Sketches/Master)    
